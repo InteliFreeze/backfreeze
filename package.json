@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/InteliFreeze/backfreeze#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "superagent": "^7.1.2"
   }
 }

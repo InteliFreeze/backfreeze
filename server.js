@@ -13,5 +13,3 @@ app.use((req, res, next) => {
   res.send("hello")
   next();
 });
-
-// fim da parada

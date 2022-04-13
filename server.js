@@ -6,8 +6,6 @@ const server = app.listen(port, (req, res) => {
   console.log(`App running on port ${port}...`);
 });
 
-
-
 app.use((req, res, next) => {
   res.send("hello");
   next();

@@ -8,6 +8,10 @@ const receitaSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Um item precisa ter um nome.'],
   },
+  secao: {
+    type: [String],
+    select: false
+  }
 });
 /* 
 

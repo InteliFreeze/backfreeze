@@ -1,30 +1,37 @@
 const mongoose = require('mongoose');
+
 const slugify = require('slugify');
 
 //---------------------------------------------------------------------------------------------------------------//
 
-const itemSchema = new mongoose.Schema({
-  id: String,
-  name: {
+const userSchema = new mongoose.Schema({
+  token: {
     type: String,
-    required: [true, 'Um item precisa ter um nome.'],
-    unique: true,
-    trim: true,
+    required: true,
   },
-  slug: String,
-  validade: {
-    type: Date,
-    required: [true, 'Um item precisa ter uma validade.'],
-  },
+  items: [
+    {
+      id: mongoose.Types.ObjectId,
+      name: {
+        type: String,
+        unique: true,
+        trim: true,
+      },
+      slug: String,
+      validade: {
+        type: Date,
+      },
+    },
+  ],
 });
 
-itemSchema.pre('save', function (next) {
+userSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
 //---------------------------------------------------------------------------------------------------------------//
 
-const Tour = mongoose.model('Item', itemSchema);
+const Tour = mongoose.model('user', userSchema);
 
 module.exports = Tour;

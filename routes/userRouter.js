@@ -1,5 +1,5 @@
 const express = require('express');
-const estoqueController = require('../controllers/estoqueController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -7,10 +7,9 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(estoqueController.createItem)
-  .patch(estoqueController.editItem);
+  .post(userController.createUser)
 
-router.route('/:id/:id2').get(estoqueController.getItems);
+router.route('/:id/').get(userController.getUser);
 
 module.exports = router;
 

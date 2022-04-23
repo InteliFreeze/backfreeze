@@ -11,6 +11,9 @@ const receitaSchema = new mongoose.Schema({
   secao: {
     type: [mongoose.Schema.Types.Object],
   },
+  size: {
+    type: Number,
+  },
 });
 /* 
 
@@ -136,6 +139,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
 
 //---------------------------------------------------------------------------------------------------------------//
 
-const Receita = mongoose.model('receitas', receitaSchema);
+const Receita = mongoose.model('query', receitaSchema);
 
 module.exports = Receita;

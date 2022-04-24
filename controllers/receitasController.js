@@ -3,20 +3,20 @@ const Receita = require('../models/receitaQueryModel');
 //---------------------------------------------------------------------------------------------------------------//
 
 exports.getReceita = async (req, res) => {
-  const ingredientes = ['Açúcar', 'açúcar cristal', 'Sal', 'cacau em pó'];
+  const ingredientes = ["suco de laranja", "presunto", "queijo", "pão", "cebola", "carne", "carne moída", "feijão", "arroz", "batata", "laranja", "chocolate", "macarrão", "fermento em pó", "farinha", "sal", "requeijão", "mortadela"];
 
   const resposta = await Receita.aggregate([
     {
       $match: {
-        secao: { $in: ingredientes },
+        ingredientes: { $in: ingredientes },
       },
     },
     {
       $project: {
-        size: { $size: '$secao' },
+        size: { $size: '$ingredientes' },
         order: {
           $size: {
-            $setIntersection: [ingredientes, '$secao'],
+            $setIntersection: [ingredientes, '$ingredientes'],
           },
         },
       },
@@ -28,6 +28,14 @@ exports.getReceita = async (req, res) => {
     },
     { $sort: { percentage: -1 } },
   ]);
+
+  // const resposta = await Receita.aggregate([
+  //   {
+  //     $match: {
+  //       Nome: { $eq: 'Scalloped Corn' },
+  //     }
+  //   }
+  // ]);
 
   // const resposta = await Receita.aggregate([
   //   {

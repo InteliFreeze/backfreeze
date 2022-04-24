@@ -4,16 +4,12 @@ const mongoose = require('mongoose');
 
 const receitaSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  id: String,
   nome: {
     type: String,
     required: [true, 'Um item precisa ter um nome.'],
   },
-  secao: {
-    type: [mongoose.Schema.Types.Object],
-  },
-  size: {
-    type: Number,
-  },
+  ingredientes: [String],
 });
 /* 
 
@@ -139,6 +135,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
 
 //---------------------------------------------------------------------------------------------------------------//
 
-const Receita = mongoose.model('query', receitaSchema);
+const Receita = mongoose.model('queries_receitas', receitaSchema);
 
 module.exports = Receita;

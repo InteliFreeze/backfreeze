@@ -2,8 +2,30 @@ const Receita = require('../models/receitaQueryModel');
 
 //---------------------------------------------------------------------------------------------------------------//
 
-exports.getReceita = async (req, res) => {
-  const ingredientes = ["suco de laranja", "presunto", "queijo", "pão", "cebola", "carne", "carne moída", "feijão", "arroz", "batata", "laranja", "chocolate", "macarrão", "fermento em pó", "farinha", "sal", "requeijão", "mortadela"];
+exports.sugerirReceitas = async (req, res) => {
+  let ingredientes = [];
+  if (req.body.ingredientes !== undefined && req.body.ingredientes !== '') {
+    ingredientes = req.body.ingredientes
+      .replace('[', '')
+      .replace(']', '')
+      .split(',');
+  }
+  let validades = [];
+  if (req.body.validades !== undefined && req.body.validades !== '') {
+    validades =
+      req.body.validades.replace('[', '').replace(']', '').split(',') || [];
+  }
+  const ingredientesQuaseVencidos = [];
+
+  let i = 0;
+  while (i < ingredientes.length) {
+    if (new Date(validades[i]) - Date.now() <= 432000000) {
+      ingredientesQuaseVencidos.push(ingredientes[i]);
+    }
+    i += 1;
+  }
+
+  const limit = 20;
 
   const resposta = await Receita.aggregate([
     {
@@ -13,46 +35,47 @@ exports.getReceita = async (req, res) => {
     },
     {
       $project: {
-        size: { $size: '$ingredientes' },
-        order: {
+        ingredientesParaReceita: { $size: '$ingredientes' },
+        naGeladeira: {
           $size: {
             $setIntersection: [ingredientes, '$ingredientes'],
+          },
+        },
+        itemsEmVencimento: {
+          $size: {
+            $setIntersection: [ingredientesQuaseVencidos, '$ingredientes'],
           },
         },
       },
     },
     {
       $addFields: {
-        percentage: { $divide: ['$order', '$size'] },
+        sugestionIndex: {
+          $multiply: [
+            { $divide: ['$naGeladeira', '$ingredientesParaReceita'] },
+            { $divide: ['$itemsEmVencimento', '$ingredientesParaReceita'] },
+          ],
+        },
+        porcentagemNaGeladeira: {
+          $multiply: [
+            { $divide: ['$naGeladeira', '$ingredientesParaReceita'] },
+            100,
+          ],
+        },
       },
     },
-    { $sort: { percentage: -1 } },
-  ]);
+    {
+      $lookup: {
+        from: 'queries_receitas',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'idParaRequest',
+        pipeline: [{ $unset: ['_id', 'nome'] }],
+      },
+    },
+    { $sort: { sugestionIndex: -1 } },
+  ]).limit(limit);
 
-  // const resposta = await Receita.aggregate([
-  //   {
-  //     $match: {
-  //       Nome: { $eq: 'Scalloped Corn' },
-  //     }
-  //   }
-  // ]);
-
-  // const resposta = await Receita.aggregate([
-  //   {
-  //     $match: {
-  //       secao: { $in: ingredientes },
-  //     },
-  //   },
-  //   {
-  //     $project: {
-  //       size: { $size: '$secao' },
-
-  //     },
-  //   },
-  //   { $sort: { size: 1 } },
-  // ]);
-
-  // const doc = await Receita.findById(req.params.id);
   res.status(200).json({ status: 'sucess', data: { resposta } });
 };
 

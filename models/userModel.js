@@ -11,7 +11,10 @@ const userSchema = new mongoose.Schema({
   },
   items: [
     {
-      id: mongoose.Types.ObjectId,
+      id: {
+        type: String,
+        select: true,
+      },
       name: {
         type: String,
         unique: true,

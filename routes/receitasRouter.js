@@ -5,7 +5,7 @@ const router = express.Router();
 
 //---------------------------------------------------------------------------------------------------------------//
 
-router.route('/:id').get(receitasController.getReceita);
+router.route('/').get(receitasController.sugerirReceitas);
 
 module.exports = router;
 

@@ -11,6 +11,6 @@ module.exports = app;
 app.use(express.json());
 
 app.use('/api/receitas', receitasRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 
 //---------------------------------------------------------------------------------------------------------------//

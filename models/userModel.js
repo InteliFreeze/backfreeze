@@ -1,36 +1,28 @@
 const mongoose = require('mongoose');
 
-const slugify = require('slugify');
-
 //---------------------------------------------------------------------------------------------------------------//
 
 const userSchema = new mongoose.Schema({
   token: {
     type: String,
     required: true,
+    unique: true,
   },
   items: [
     {
-      id: {
+      nome: {
         type: String,
-        select: true,
-      },
-      name: {
-        type: String,
-        unique: true,
         trim: true,
+        toLowerCase: true,
       },
-      slug: String,
       validade: {
         type: Date,
       },
+      codigo: {
+        type: Number,
+      },
     },
   ],
-});
-
-userSchema.pre('save', function (next) {
-  this.slug = slugify(this.name, { lower: true });
-  next();
 });
 
 //---------------------------------------------------------------------------------------------------------------//

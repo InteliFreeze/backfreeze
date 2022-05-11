@@ -41,6 +41,12 @@ exports.sugerirReceitas = async (req, res) => {
             $setIntersection: [ingredientes, '$ingredientes'],
           },
         },
+        itemsEmVencimentoNaReceita: {
+          $setIntersection: [ingredientes, '$ingredientes'],
+        },
+        itemsFaltantes: {
+          $setDifference: ['$ingredientes', ingredientes],
+        },
         itemsEmVencimento: {
           $size: {
             $setIntersection: [ingredientesQuaseVencidos, '$ingredientes'],

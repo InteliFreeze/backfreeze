@@ -146,6 +146,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
 
 //---------------------------------------------------------------------------------------------------------------//
 
-const Receita = mongoose.model('receitas_items', receitaSchema);
+const Receita = mongoose.model('receitas', receitaSchema);
 
 module.exports = Receita;

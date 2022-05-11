@@ -73,7 +73,7 @@ exports.sugerirReceitas = async (req, res) => {
         pipeline: [{ $unset: ['_id', 'nome'] }],
       },
     },
-    { $sort: { sugestionIndex: -1 } },
+    { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },
   ]).limit(limit);
 
   res.status(200).json({ status: 'sucess', data: { resposta } });

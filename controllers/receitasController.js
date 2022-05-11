@@ -1,4 +1,4 @@
-const Receita = require('../models/receitaQueryModel');
+const Receita = require('../models/receitaModel');
 
 //---------------------------------------------------------------------------------------------------------------//
 
@@ -25,7 +25,7 @@ exports.sugerirReceitas = async (req, res) => {
     i += 1;
   }
 
-  const limit = 20;
+  const limit = 200;
 
   const resposta = await Receita.aggregate([
     {
@@ -66,7 +66,7 @@ exports.sugerirReceitas = async (req, res) => {
     },
     {
       $lookup: {
-        from: 'queries_receitas',
+        from: 'receitas_items',
         localField: '_id',
         foreignField: '_id',
         as: 'idParaRequest',

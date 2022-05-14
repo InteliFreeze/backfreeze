@@ -76,7 +76,6 @@ exports.sugerirReceitas = async (req, res) => {
         localField: '_id',
         foreignField: '_id',
         as: 'idParaRequest',
-        pipeline: [{ $unset: ['_id', 'nome'] }],
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },

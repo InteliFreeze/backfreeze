@@ -67,4 +67,17 @@ exports.addItem = async (req, res) => {
   }
 };
 
+exports.sync = async (req, res) => {
+  try {
+    await userModel.findOneAndUpdate(
+      { token: req.params.token },
+      { items: req.body.items }
+    );
+
+    res.status(200).json({ status: 'success', message: 'Sincronizado' });
+  } catch (err) {
+    res.status(500).json({ status: 'fail', message: err });
+  }
+};
+
 //---------------------------------------------------------------------------------------------------------------//

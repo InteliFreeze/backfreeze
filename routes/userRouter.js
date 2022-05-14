@@ -13,6 +13,8 @@ router.delete('/:token/:itemId', userController.deleteItem);
 
 router.route('/:token').get(userController.getUser);
 
+router.route('/:token').patch(userController.sync);
+
 module.exports = router;
 
 //---------------------------------------------------------------------------------------------------------------//

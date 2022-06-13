@@ -31,7 +31,6 @@ exports.sugerirReceitas = async (req, res) => {
     {
       $match: {
         ingredientes: { $in: ingredientes },
-        nome: { $regex: req.body.nome, $options: '' },
       },
     },
     {

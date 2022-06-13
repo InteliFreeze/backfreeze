@@ -72,10 +72,10 @@ exports.sugerirReceitas = async (req, res) => {
     },
     {
       $lookup: {
-        from: 'receitas_items',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'idParaRequest',
+        from: 'receitas_input',
+        localField: 'nome',
+        foreignField: 'nome',
+        as: 'nome',
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },

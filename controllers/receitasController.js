@@ -87,6 +87,6 @@ exports.sugerirReceitas = async (req, res) => {
 //---------------------------------------------------------------------------------------------------------------//
 
 exports.getReceita = async (req, res) => {
-  const receita = await Receita.find({ id: req.body.id });
+  const receita = await Receita.find({ _id: req.body.id });
   res.status(200).json({ status: 'sucess', data: { receita } });
 };

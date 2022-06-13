@@ -31,6 +31,7 @@ exports.sugerirReceitas = async (req, res) => {
     {
       $match: {
         ingredientes: { $in: ingredientes },
+        nome: { $regex: req.body.nome, $options: '' },
       },
     },
     {
@@ -68,14 +69,6 @@ exports.sugerirReceitas = async (req, res) => {
             100,
           ],
         },
-      },
-    },
-    {
-      $lookup: {
-        from: 'receitas_input',
-        localField: 'nome',
-        foreignField: 'nome',
-        as: 'nomeReceita',
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },

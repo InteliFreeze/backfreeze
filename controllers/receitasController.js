@@ -68,12 +68,11 @@ exports.sugerirReceitas = async (req, res) => {
             100,
           ],
         },
+        nome: '$nome',
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },
-  ])
-    .populate('field', 'name')
-    .limit(limit);
+  ]).limit(limit);
 
   res.status(200).json({ status: 'sucess', data: { resposta } });
 };

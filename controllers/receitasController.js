@@ -75,7 +75,7 @@ exports.sugerirReceitas = async (req, res) => {
         from: 'receitas_input',
         localField: 'nome',
         foreignField: 'nome',
-        as: 'nome',
+        as: 'nomeReceita',
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },

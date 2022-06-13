@@ -71,7 +71,9 @@ exports.sugerirReceitas = async (req, res) => {
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },
-  ]).limit(limit);
+  ])
+    .populate('field', 'name')
+    .limit(limit);
 
   res.status(200).json({ status: 'sucess', data: { resposta } });
 };

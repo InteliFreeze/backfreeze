@@ -31,6 +31,7 @@ exports.sugerirReceitas = async (req, res) => {
     {
       $match: {
         ingredientes: { $in: ingredientes },
+        nome: { $regex: '' },
       },
     },
     {
@@ -52,6 +53,7 @@ exports.sugerirReceitas = async (req, res) => {
             $setIntersection: [ingredientesQuaseVencidos, '$ingredientes'],
           },
         },
+        nome: '$nome',
       },
     },
     {
@@ -68,7 +70,6 @@ exports.sugerirReceitas = async (req, res) => {
             100,
           ],
         },
-        nome: '$nome',
       },
     },
     { $sort: { sugestionIndex: -1, ingredientesParaReceita: -1 } },

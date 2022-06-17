@@ -25,7 +25,7 @@ exports.sugerirReceitas = async (req, res) => {
     i += 1;
   }
 
-  const limit = 200;
+  const limit = 30;
 
   const resposta = await Receita.aggregate([
     {

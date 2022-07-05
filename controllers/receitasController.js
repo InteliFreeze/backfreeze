@@ -8,9 +8,12 @@ exports.ocr = async (req, res) => {
     method: 'post',
     url: 'https://backfreeze-ocr.herokuapp.com/img_to_str/',
     data: {
-      base64_img: req.query.base64,
+      base64_img: req.body.base64,
     },
-  });
+  })
+    .catch((err) => {
+      return 'Erro ao tentar realizar o OCR';
+    });
 
   const validadeBruta = response.data.text_str.replace(' ', '').replace('.', '/')
   const extraida = /[0-9]+\/[0-9]+\/[0-9]+/.exec(validadeBruta) || {0: '01/01/2023'};

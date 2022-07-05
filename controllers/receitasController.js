@@ -15,7 +15,7 @@ exports.ocr = async (req, res) => {
       return 'Erro ao tentar realizar o OCR';
     });
 
-  const validadeBruta = response.data.text_str.replace(' ', '').replace('.', '/')
+  const validadeBruta = response.data.text_str.replace(' ', '').replace('.', '/').replace('-', '/').replace(/[a-z]|[A-Z]/g, '');
   const extraida = /[0-9]+\/[0-9]+\/[0-9]+/.exec(validadeBruta) || {0: '01/01/2023'};
 
   res
@@ -23,7 +23,7 @@ exports.ocr = async (req, res) => {
     .json({
       status: 'sucess',
       data: extraida[0],
-      stringInicial: response.data.text_str,
+      stringInicial: validadeBruta,
     });
 };
 

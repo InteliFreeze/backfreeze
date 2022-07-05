@@ -23,7 +23,8 @@ exports.ocr = async (req, res) => {
     .json({
       status: 'sucess',
       data: extraida[0],
-      stringInicial: validadeBruta,
+      stringInicial: response.data.text_str,
+      stringFinal: validadeBruta,
     });
 };
 

@@ -1,6 +1,27 @@
+const axios = require('axios');
 const Receita = require('../models/receitaModel');
 
 //---------------------------------------------------------------------------------------------------------------//
+
+exports.ocr = async (req, res) => {
+  const response = await axios({
+    method: 'post',
+    url: 'https://backfreeze-ocr.herokuapp.com/img_to_str/',
+    data: {
+      base64_img: req.query.base64,
+    },
+  });
+
+  const validadeBruta = response.data.text_str.replace(' ', '').replace('.', '/')
+  const extraida = /[0-9]+\/[0-9]+\/[0-9]+/.exec(validadeBruta) || {0: '01/01/2023'};
+
+  res
+    .status(200)
+    .json({
+      status: 'sucess',
+      data: extraida[0],
+    });
+};
 
 exports.sugerirReceitas = async (req, res) => {
   let ingredientes = [];

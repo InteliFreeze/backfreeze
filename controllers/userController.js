@@ -28,7 +28,7 @@ exports.deleteItem = async (req, res) => {
 
     const { items } = User[0];
     const itemsFiltrados = await JSON.parse(JSON.stringify(items)).filter(
-      (item) => item.codigo !== idDoitemASerDeletado
+      (item) => item.codigo !== idDoitemASerDeletado * 1
     );
     const updatedUser = await User[0].set({ items: itemsFiltrados });
 

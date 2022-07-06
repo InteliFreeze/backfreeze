@@ -25,6 +25,7 @@ exports.ocr = async (req, res) => {
       data: extraida[0],
       stringInicial: response.data.text_str,
       stringFinal: validadeBruta,
+      stringExtraida: extraida,
     });
 };
 
